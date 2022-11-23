@@ -2,17 +2,19 @@ const { Worker } = require('worker_threads');
 const util = require('minecraft-server-util');
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
+
 const fs = require('fs');
 const cors = require('cors');
-
-const PORT = 8080; // Our default port
-const MCPORT = 25565;
+const path = require('path');
+const app = express();
 
 app.use(cors());
 app.use(express.static('../frontend/dist'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+const PORT = 8080; // Our default port
+const MCPORT = 25565;
 
 if (!fs.existsSync('./ips.txt')) {
   fs.writeFileSync('./ips.txt', '');
@@ -27,6 +29,10 @@ iparray.pop();
 const worker = new Worker('./getips', {workerData: {PORT: MCPORT}});
 worker.on('message', async (ip) => {
   iparray.push(ip);
+});
+
+app.get('/', async (req, res) => {
+  res.sendFile(path.join(__dirname + "/../frontend/dist/index.html"));
 });
 
 // Get the ips
@@ -55,7 +61,6 @@ app.get('/api/getServerInfo', async (req, res) => {
     util.status(req.query.ip, MCPORT, options)
       .then((resp) => {
         res.status(200).json(resp);
-        // console.log(resp);
       })
       .catch((e) => {
         res.sendStatus(500);

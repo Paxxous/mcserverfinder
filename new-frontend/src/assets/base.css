@@ -1,0 +1,22 @@
+/* Just colors baby */
+
+@import '/fira-sans/stylesheet.css';
+
+:root {
+  --dark-blue: #1E2130;
+
+  --darker-blue: #10152D;
+  --bluer-darker-blue: #181C31;
+  --slightly-darker-blue: #262A3D;
+  --greyish-blue: #2A2C36;
+
+  --light-blue: #7EA1C4;
+  --slightly-light-blue: #5D7791;
+  --very-light-blue: #89B0D6;
+}
+
+body {
+  background-color: var(--dark-blue);
+  margin: 0;
+  padding: 0;
+}

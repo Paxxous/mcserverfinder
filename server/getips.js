@@ -2,7 +2,7 @@
 const { parentPort, workerData } = require('worker_threads');
 const fs = require('fs');
 const util = require('minecraft-server-util');
-const SPEED = 5;
+const SPEED = 1;
 
 // parentPort.postMessage("amongus");
 
